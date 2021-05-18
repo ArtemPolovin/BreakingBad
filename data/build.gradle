@@ -1,8 +1,7 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
     id 'dagger.hilt.android.plugin'
 }
 
@@ -11,13 +10,13 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.breakingbad"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -33,18 +32,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
-    buildFeatures {
-        dataBinding = true
-    }
 }
 
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation project(path: ':data')
     implementation project(path: ':domain')
-
 
     // core-ktx
     implementation core.coreKtx
@@ -57,7 +50,6 @@ dependencies {
 
     //constraintLayout
     implementation constraintlayout.constraintlayout
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //junit
     testImplementation junit.junit
@@ -68,13 +60,9 @@ dependencies {
     //espresso
     androidTestImplementation espresso.espressoCore
 
-    //NavigationFragment
-    implementation navigationFragment.navFragment
-    implementation navigationFragment.navigationUi
-    implementation navigationFragment.navigationUiKtx
-
-    //RecyclerView
-    implementation recyclerView.recyclerView
+    //Retrofit2
+    implementation retrofit2.retrofit
+    implementation retrofit2.converterGson
 
     //Coroutines
     implementation coroutines.coroutinesCore
@@ -83,11 +71,5 @@ dependencies {
     // Dagger Hilt
     implementation daggerHilt.daggerHilt
     kapt daggerHilt.daggerHiltCompiler
-
-    //RecyclerView
-    implementation recyclerView.recyclerView
-
-    // Glide
-    implementation glide.glide
 
 }
