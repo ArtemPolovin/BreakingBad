@@ -72,4 +72,13 @@ dependencies {
     implementation daggerHilt.daggerHilt
     kapt daggerHilt.daggerHiltCompiler
 
+    // Google truth
+    testImplementation googleTruth.googleTruth
+
+    // Mockito
+    testImplementation mockito.mockito
+
+    // Kotlin coroutines test
+    testImplementation coroutinesTest.coroutinesTest
+
 }

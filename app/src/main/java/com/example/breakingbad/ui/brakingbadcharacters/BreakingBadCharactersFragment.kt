@@ -48,12 +48,13 @@ class BreakingBadCharactersFragment : Fragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
 
+        viewModel.refreshBreakingBadCharactersList()
 
         refreshList()
         openProfile()
         setupBreakingBadCharactersList()
         inputResultOfBreakingBadCharacterSearch()
-        sendBreakingBadCharactersListToAdapter()
+        sendBreakingBadCharactersFilteredListToAdapter()
     }
 
     private fun setupBreakingBadCharactersList() {
@@ -61,17 +62,21 @@ class BreakingBadCharactersFragment : Fragment() {
         viewModel.breakingBadCharacterList.observe(viewLifecycleOwner, {
             text_error.visibility = View.GONE
             refresh_layout.isRefreshing = false
+            rv_characters.visibility = View.GONE
 
             when (it) {
                 Resource.Loading -> {
                     refresh_layout.isRefreshing = true
                 }
                 is Resource.Failure -> {
+                    search_view.visibility = View.GONE
                     text_error.visibility = View.VISIBLE
                     text_error.text = it.message
                 }
                 is Resource.Success -> {
-                    characterAdapter.setData(it.data)
+                    rv_characters.visibility = View.VISIBLE
+                    search_view.visibility = View.VISIBLE
+                    if (!viewModel.isListFiltered) characterAdapter.setData(it.data)
                 }
             }
         })
@@ -108,9 +113,9 @@ class BreakingBadCharactersFragment : Fragment() {
 
     }
 
-    private fun sendBreakingBadCharactersListToAdapter() {
+    private fun sendBreakingBadCharactersFilteredListToAdapter() {
         viewModel.filteredCharactersList.observe(viewLifecycleOwner, {
-            characterAdapter.setData(it)
+            if (viewModel.isListFiltered) characterAdapter.setData(it)
         })
     }
 
@@ -122,15 +127,21 @@ class BreakingBadCharactersFragment : Fragment() {
             .setView(filterDialog)
 
         val alertDialog = builder.show()
+        alertDialog.setCancelable(false)
+        alertDialog.setCanceledOnTouchOutside(false)
 
         filterDialog.text_apply.setOnClickListener {
             alertDialog.dismiss()
 
-            val seasonNumber: Int = filterDialog.edit_number_of_season.text.toString().toInt()
-            viewModel.filterBySeason(seasonNumber)
+            val seasonNumber = filterDialog.edit_number_of_season.text.toString()
+            if (seasonNumber.isNotEmpty()) {
+                viewModel.filterBySeason(seasonNumber.toInt())
+            }
         }
 
-        filterDialog.text_cancel.setOnClickListener { alertDialog.dismiss() }
+        filterDialog.text_cancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
     }
 
     private fun openProfile() {
@@ -150,6 +161,7 @@ class BreakingBadCharactersFragment : Fragment() {
     private fun refreshList() {
         refresh_layout.setOnRefreshListener {
             viewModel.refreshBreakingBadCharactersList()
+            search_view.isIconified = true
         }
     }
 

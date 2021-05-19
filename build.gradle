@@ -40,7 +40,12 @@ ext.versions = [
         coroutines       : "1.4.1",
         daggerHilt       : "2.33-beta",
         glide            : "4.12.0",
-        serializationJson: "1.2.1"
+        serializationJson: "1.2.1",
+        googleTruth      : "1.0.1",
+        mockito          : "2.23.0",
+        coroutinesTest   : "1.2.1",
+        coreTesting      : "2.1.0",
+        mockitoLine      : "2.13.0"
 ]
 
 ext.core = [
@@ -104,5 +109,24 @@ ext.serializationJson = [
         serialization: "org.jetbrains.kotlinx:kotlinx-serialization-json:$versions.serializationJson"
 ]
 
+ext.googleTruth = [
+        googleTruth: "com.google.truth:truth:$versions.googleTruth"
+]
+
+ext.mockito = [
+        mockito: "org.mockito:mockito-core:$versions.mockito"
+]
+
+ext.coroutinesTest = [
+        coroutinesTest: "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutinesTest"
+]
+
+ext.coreTesting = [
+        coreTesting: "androidx.arch.core:core-testing:$versions.coreTesting"
+]
+
+ext.mockitoLine = [
+        mockitoLine: "org.mockito:mockito-inline:$versions.mockitoLine"
+]
 
 
