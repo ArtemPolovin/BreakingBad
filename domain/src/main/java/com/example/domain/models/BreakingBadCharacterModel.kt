@@ -1,5 +1,8 @@
 package com.example.domain.models
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class BreakingBadCharacterModel(
     val name: String,
     val imageUrl: String,

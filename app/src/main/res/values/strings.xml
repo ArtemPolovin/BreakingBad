@@ -6,4 +6,7 @@
     <string name="number_of_season_hint">Enter number of season</string>
     <string name="text_cancel">Cancel</string>
     <string name="text_apply">Apply</string>
+    <string name="text_status">Status:</string>
+    <string name="text_occupation">Occupation</string>
+    <string name="text_season_appearance">Season appearance</string>
 </resources>

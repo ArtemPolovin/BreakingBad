@@ -57,8 +57,8 @@ class BreakingBadCharactersViewModel @Inject constructor(
         }
     }
 
-   /* fun refreshBreakingBadCharactersList() {
+    fun refreshBreakingBadCharactersList() {
         fetchBreakingBadCharacters()
-    }*/
+    }
 
 }
