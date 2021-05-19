@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
     id 'dagger.hilt.android.plugin'
+    id 'kotlinx-serialization'
 }
 
 android {
@@ -89,5 +90,8 @@ dependencies {
 
     // Glide
     implementation glide.glide
+
+    // Kotlinx-serialization-json
+    implementation serializationJson.serialization
 
 }

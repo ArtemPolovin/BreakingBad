@@ -11,4 +11,9 @@
     <color name="error_text_color">#F44336</color>
     <color name="search_city_background_color">#A1E4E3E3</color>
     <color name="dialog_button_color">#04A5ED</color>
+    <color name="colorLayerBack">#8a56ab</color>
+    <color name="colorBack">#241333</color>
+    <color name="colorTitle">#362742</color>
+    <color name="colorSubTitle">#c5c9cf</color>
+    <color name="colorHorizontalDivider">#898a56ab</color>
 </resources>

@@ -9,5 +9,18 @@
         android:id="@+id/brakingBadCharactersFragment"
         android:name="com.example.breakingbad.ui.brakingbadcharacters.BreakingBadCharactersFragment"
         android:label="Characters"
-        tools:layout="@layout/fragment_breaking_bad_characters" />
+        tools:layout="@layout/fragment_breaking_bad_characters" >
+        <action
+            android:id="@+id/action_brakingBadCharactersFragment_to_characterDetailsFragment"
+            app:destination="@id/characterDetailsFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetailsFragment"
+        android:name="com.example.breakingbad.ui.characterdetails.CharacterDetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_character_details" />
 </navigation>

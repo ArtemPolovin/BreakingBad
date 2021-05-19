@@ -7,9 +7,11 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.breakingbad.R
 import com.example.breakingbad.common.MINIMUM_SYMBOLS
+import com.example.breakingbad.common.putKSerializable
 import com.example.domain.common.Resource
 import com.example.domain.models.BreakingBadCharacterModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,14 +48,9 @@ class BreakingBadCharactersFragment : Fragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
 
-        characterAdapter.onClickItem(object : BreakingBadCharactersAdapter.OnClickItemListener {
-            override fun getBreakingBadCharacter(breakingBadCharacter: BreakingBadCharacterModel) {
-                println("mLog: name = ${breakingBadCharacter.name}")
-            }
 
-        })
-
-        //viewModel.refreshBreakingBadCharactersList()
+        refreshList()
+        openProfile()
         setupBreakingBadCharactersList()
         inputResultOfBreakingBadCharacterSearch()
         sendBreakingBadCharactersListToAdapter()
@@ -62,12 +59,12 @@ class BreakingBadCharactersFragment : Fragment() {
     private fun setupBreakingBadCharactersList() {
 
         viewModel.breakingBadCharacterList.observe(viewLifecycleOwner, {
-            progress_bar.visibility = View.GONE
             text_error.visibility = View.GONE
+            refresh_layout.isRefreshing = false
 
             when (it) {
                 Resource.Loading -> {
-                    progress_bar.visibility = View.VISIBLE
+                    refresh_layout.isRefreshing = true
                 }
                 is Resource.Failure -> {
                     text_error.visibility = View.VISIBLE
@@ -134,6 +131,26 @@ class BreakingBadCharactersFragment : Fragment() {
         }
 
         filterDialog.text_cancel.setOnClickListener { alertDialog.dismiss() }
+    }
+
+    private fun openProfile() {
+        characterAdapter.onClickItem(object : BreakingBadCharactersAdapter.OnClickItemListener {
+            override fun getBreakingBadCharacter(breakingBadCharacter: BreakingBadCharacterModel) {
+                val bundle = Bundle()
+                bundle.putKSerializable("characterObject", breakingBadCharacter)
+                findNavController().navigate(
+                    R.id.action_brakingBadCharactersFragment_to_characterDetailsFragment,
+                    bundle
+                )
+            }
+
+        })
+    }
+
+    private fun refreshList() {
+        refresh_layout.setOnRefreshListener {
+            viewModel.refreshBreakingBadCharactersList()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
