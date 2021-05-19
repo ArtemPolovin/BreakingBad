@@ -3,7 +3,7 @@ package com.example.data.mappers
 import com.example.data.modelsapi.characters.BreakingBadCharacterApi
 import com.example.domain.models.BreakingBadCharacterModel
 
-class BreakingBadMapper {
+ class BreakingBadMapper {
     fun mapBreakingBadApiToModel(breakingBadCharacterApi: BreakingBadCharacterApi): List<BreakingBadCharacterModel> {
 
         return breakingBadCharacterApi.map { characterApi ->

@@ -94,4 +94,19 @@ dependencies {
     // Kotlinx-serialization-json
     implementation serializationJson.serialization
 
+    // Google truth
+    testImplementation googleTruth.googleTruth
+
+    // Mockito
+    testImplementation mockito.mockito
+
+    // Kotlin coroutines test
+    testImplementation coroutinesTest.coroutinesTest
+
+    // Core-testing
+    testImplementation coreTesting.coreTesting
+
+    //Mockito-line
+    testImplementation mockitoLine.mockitoLine
+
 }

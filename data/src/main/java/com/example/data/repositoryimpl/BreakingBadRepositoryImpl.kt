@@ -22,7 +22,7 @@ class BreakingBadRepositoryImpl(
                       return@let Resource.Success(mapper.mapBreakingBadApiToModel(it))
                   } ?: Resource.Failure(message = "An unknown error occured")
               } else {
-                  Log.i("mLog", "response error = ${response.errorBody()?.string()}")
+                 // Log.i("mLog", "response error = ${response.errorBody()?.string()}")
                   Resource.Failure(message = "An unknown error occured")
               }
           }catch (e: Exception){

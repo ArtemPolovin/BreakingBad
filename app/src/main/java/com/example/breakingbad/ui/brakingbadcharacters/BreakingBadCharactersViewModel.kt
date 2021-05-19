@@ -8,6 +8,7 @@ import com.example.domain.common.Resource
 import com.example.domain.models.BreakingBadCharacterModel
 import com.example.domain.usecases.GetBreakingBadCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,6 +16,10 @@ import javax.inject.Inject
 class BreakingBadCharactersViewModel @Inject constructor(
     private val getBreakingBadCharactersUseCase: GetBreakingBadCharactersUseCase
 ) : ViewModel() {
+
+    private var getDataJob: Job? = null
+
+    var isListFiltered = false
 
     private val charactersList = mutableListOf<BreakingBadCharacterModel>()
 
@@ -25,14 +30,13 @@ class BreakingBadCharactersViewModel @Inject constructor(
     private val _filteredCharactersList = MutableLiveData<List<BreakingBadCharacterModel>>()
     val filteredCharactersList: LiveData<List<BreakingBadCharacterModel>> get() = _filteredCharactersList
 
-    init {
-        fetchBreakingBadCharacters()
-    }
-
     private fun fetchBreakingBadCharacters() {
-        _breakingBadCharacterList.value = Resource.Loading
+        if(getDataJob?.isActive == true)return
 
-        viewModelScope.launch {
+        _breakingBadCharacterList.value = Resource.Loading
+        isListFiltered = false
+
+       getDataJob =  viewModelScope.launch {
             val result = getBreakingBadCharactersUseCase.execute()
             _breakingBadCharacterList.value = result
 
@@ -45,6 +49,8 @@ class BreakingBadCharactersViewModel @Inject constructor(
 
     fun filterByName(inputResult: String) {
         if (charactersList.isNotEmpty()) {
+            isListFiltered = true
+
             _filteredCharactersList.value =
                 charactersList.filter { it.name.contains(inputResult, true) }
         }
@@ -52,6 +58,8 @@ class BreakingBadCharactersViewModel @Inject constructor(
 
     fun filterBySeason(numberOfSeason: Int) {
         if (charactersList.isNotEmpty()) {
+            isListFiltered = true
+
             _filteredCharactersList.value =
                 charactersList.filter { it.seasonAppearance.contains(numberOfSeason) }
         }
